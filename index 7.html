@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2a0f1f">
+<title>Between Us – Couples Games</title>
+<style>
+:root{--bg:#2a0f1f;--card:#3b1630;--ink:#fff1f5;--mute:#d9a9bb;--pink:#ff5c8a;--gold:#ffc46b;--r:20px}
+*{box-sizing:border-box;margin:0}
+body{font-family:Georgia,"Segoe UI",system-ui,sans-serif;background:radial-gradient(circle at 50% 0,#4a1a38,var(--bg) 60%);color:var(--ink);min-height:100vh;padding:env(safe-area-inset-top,0) 16px 24px}
+main{max-width:520px;margin:0 auto;padding-top:24px}
+h1{font-size:2rem;text-align:center}
+.sub{text-align:center;color:var(--mute);margin:6px 0 22px;font-size:.95rem}
+.grid{display:grid;gap:12px}
+.tile,.btn{border:0;cursor:pointer;font:inherit;color:var(--ink);border-radius:var(--r)}
+.tile{background:var(--card);padding:18px;text-align:left;display:flex;gap:14px;align-items:center;border:1px solid #ffffff14}
+.tile b{display:block;font-size:1.1rem}.tile span{color:var(--mute);font-size:.88rem}
+.tile .em{font-size:1.8rem}
+.tile:active,.btn:active{transform:scale(.98)}
+.back{background:none;border:0;color:var(--mute);font:inherit;cursor:pointer;margin-bottom:14px}
+.card{background:linear-gradient(160deg,#5a1f45,var(--card));border:1px solid #ffffff1f;border-radius:24px;padding:28px 22px;min-height:190px;display:flex;flex-direction:column;justify-content:center;text-align:center;margin:16px 0}
+.tag{color:var(--gold);font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px}
+.q{font-size:1.3rem;line-height:1.45}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0}
+.btn{background:var(--pink);padding:13px 22px;font-weight:700}
+.btn.alt{background:#ffffff1a}
+.chip{padding:8px 16px;border-radius:99px;background:#ffffff14;border:1px solid transparent;color:var(--ink);font:inherit;cursor:pointer;font-size:.9rem}
+.chip.on{background:var(--gold);color:#2a0f1f;font-weight:700}
+.names{display:flex;gap:8px;margin-bottom:12px}
+.names input{flex:1;min-width:0;padding:12px;border-radius:14px;border:1px solid #ffffff2a;background:#ffffff10;color:var(--ink);font:inherit}
+.turn{text-align:center;color:var(--gold);font-weight:700;margin-top:6px}
+.note{text-align:center;color:var(--mute);font-size:.8rem;margin-top:22px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<main>
+  <div id="home">
+    <h1>💞 Between Us</h1>
+    <p class="sub">Games for two. Play slowly, laugh a lot, and skip anything you're not comfortable with.</p>
+    <div class="names">
+      <input id="p1" placeholder="Your name" maxlength="14">
+      <input id="p2" placeholder="Her name" maxlength="14">
+    </div>
+    <div class="grid">
+      <button class="tile" data-g="tod"><span class="em">🔥</span><div><b>Truth or Dare</b><span>Sweet, flirty or spicy</span></div></button>
+      <button class="tile" data-g="wyr"><span class="em">🤔</span><div><b>Would You Rather</b><span>Playful choices, big laughs</span></div></button>
+      <button class="tile" data-g="talk"><span class="em">💬</span><div><b>Conversation Starters</b><span>Never run out of things to say</span></div></button>
+      <button class="tile" data-g="date"><span class="em">🎲</span><div><b>Date Night Spinner</b><span>Let fate plan your evening</span></div></button>
+    </div>
+    <p class="note">18+ • Consent first: either of you can say "skip" anytime, no questions asked.</p>
+  </div>
+
+  <div id="game" class="hide">
+    <button class="back" id="back">← Back</button>
+    <div id="opts" class="row"></div>
+    <div class="turn" id="turn"></div>
+    <div class="card"><div class="tag" id="tag"></div><div class="q" id="q"></div></div>
+    <div class="row" id="acts"></div>
+  </div>
+</main>
+
+<script>
+const D={
+tod:{
+ truth:{
+  sweet:["What was the first thing you noticed about me?","When did you realise you liked me?","What is your favourite memory of us so far?","What is one small thing I do that makes you smile?","What song reminds you of me?","What is one thing you want us to do together this year?","When do you feel most loved by me?","What is something you have always wanted to tell me but haven't?","What was your first impression of me, honestly?","What is your dream date with me?","What nickname would you secretly love me to call you?","What is one thing you admire about me?","Describe our relationship in three words.","What do you think is our cutest habit as a couple?","What is one way I could make you feel more loved?"],
+  flirty:["What outfit of mine do you like the most?","Where is the best place to kiss you?","What is the most attractive thing about me physically?","Have you ever had a dream about me? Tell me.","What is the most romantic thing you can imagine us doing?","What is your favourite way for me to hold you?","When was the last time you blushed because of me?","What is the flirtiest text you have ever wanted to send me?","What is one thing I do that turns you on a little?","What do you think about when you miss me?","Which of my features do you stare at when I'm not looking?","What would you wear to impress me?","What is your idea of a perfect kiss?","What is the boldest thing you would try with me on a date?","What is something I wear that you secretly love?"],
+  spicy:["What is a fantasy of yours you would like us to talk about?","Where is your favourite place to be touched?","What is the most daring place you would want to kiss me?","What is one thing you want me to do more of when we're alone?","Describe your perfect romantic evening that ends in the bedroom.","What is something you want to try together but feel shy to ask?","What is the sexiest thing I have ever said to you?","What part of my body do you think about the most?","What would you do if we had the whole night to ourselves?","What is a mood or setting that gets you in the mood fastest?"]
+ },
+ dare:{
+  sweet:["Give me a sincere compliment looking into my eyes for 20 seconds.","Write me a short love note and read it out loud.","Tell me three things you love about me.","Hug me for a full minute without saying anything.","Say 'I love you' in the most dramatic voice you can.","Take a selfie with me and make it the wallpaper for a day.","Slow dance with me with no music, just humming.","Sing me one line of a love song.","Give me a forehead kiss and say something kind.","Make up a tiny poem about me right now."],
+  flirty:["Whisper something flirty in my ear.","Give me a 2 minute shoulder massage.","Look at me and hold eye contact for 30 seconds without laughing.","Kiss me anywhere on my face except my lips.","Feed me a snack in the most romantic way possible.","Send me the most flirty text you can write, right now, even though I'm next to you.","Trace a heart on my hand with your finger.","Tell me what you would do if we were alone on a beach.","Do your best sexy walk across the room.","Give me three kisses: one on the hand, one on the cheek, one on the neck."],
+  spicy:["Give me a slow, long kiss like it's our first.","Whisper one thing you want to do with me tonight.","Kiss my neck for 20 seconds.","Give me a 3 minute massage with oil or lotion, your choice of place.","Blindfold me and kiss me somewhere. I guess where.","Take off one item of clothing, yours or mine, your choice.","Sit on my lap and tell me what you like about me.","Play a song and give me a private slow dance.","Describe in detail what our perfect night in would be.","Choose a spot on my body and spend a minute kissing it."]
+ }
+},
+wyr:["Would you rather cook a fancy dinner together or order food and watch a movie?","Would you rather kiss in the rain or cuddle under a blanket all day?","Would you rather get a love letter or a surprise date?","Would you rather get a long massage or a long kiss?","Would you rather dance together in public or in private?","Would you rather text each other all day or talk all night?","Would you rather have a romantic trip abroad or a cosy weekend at home?","Would you rather I surprise you at your door or plan a surprise outing?","Would you rather share one dessert or each get your own?","Would you rather me sing to you badly or dance for you badly?","Would you rather stargaze or watch the sunrise together?","Would you rather be kissed on the neck or on the hand?","Would you rather have a movie marathon or an adventure day?","Would you rather get a handwritten poem or a voice note saying how I feel?","Would you rather always get good morning kisses or good night kisses?","Would you rather stay up whispering all night or sleep cuddled up early?"],
+talk:["What is one thing you wish we did more often?","What made you feel safe with me?","If we could travel anywhere next month, where would we go?","What is one thing you want me to ask you more about?","What is something small I did recently that meant a lot to you?","What are you most excited about for our future?","What does a perfect lazy Sunday with me look like?","What is something you are proud of that you rarely talk about?","What is one fear you have that I could help with?","How do you like to be comforted when you are sad?","What is something new you would like us to try together?","What do you wish I understood better about you?","What is your favourite way to receive love: words, touch, time, gifts, or help?","What is one thing that made you laugh about us recently?","What is one dream you have that you haven't told many people?","What is one thing I could say or do that would make your day?"],
+date:["Cook a meal together with a blindfolded taste test","Build a pillow fort and watch a movie","Dress up and have a fancy dinner at home","Sunset walk with no phones","Make a playlist of 10 songs for each other","Write each other letters and swap them","Slow dance in the living room","Share a bubble bath or spa night with face masks","Stargazing with snacks","Recreate your first date","Take silly couple photos and print your favourite","Have a candlelit dessert-only dinner","Give each other a massage for 10 minutes each","Play your favourite childhood games together","Plan a dream trip together on a map"]
+};
+
+const $=id=>document.getElementById(id);
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+let state={g:null,level:"sweet",turn:0,pool:[],last:""};
+
+function names(){return [$("p1").value.trim()||"Player 1",$("p2").value.trim()||"Player 2"]}
+function show(v){$("home").classList.toggle("hide",v!=="home");$("game").classList.toggle("hide",v!=="game")}
+function draw(src,key){
+  state.pool[key]=state.pool[key]||[];
+  if(!state.pool[key].length){state.pool[key]=[...src].sort(()=>Math.random()-.5)}
+  return state.pool[key].pop();
+}
+function setCard(tag,text){$("tag").textContent=tag;$("q").textContent=text}
+function btn(label,fn,alt){const b=document.createElement("button");b.className="btn"+(alt?" alt":"");b.textContent=label;b.onclick=fn;return b}
+function nextTurn(){state.turn=1-state.turn;$("turn").textContent="👉 "+names()[state.turn]+"'s turn"}
+
+function open(g){
+  state.g=g;state.pool={};state.turn=0;show("game");
+  const opts=$("opts"),acts=$("acts");opts.innerHTML="";acts.innerHTML="";
+  $("turn").textContent="";setCard("Ready?","Tap a button to begin.");
+  if(g==="tod"){
+    ["sweet","flirty","spicy"].forEach(l=>{const c=document.createElement("button");c.className="chip"+(l===state.level?" on":"");c.textContent={sweet:"💗 Sweet",flirty:"😘 Flirty",spicy:"🔥 Spicy"}[l];c.onclick=()=>{state.level=l;[...opts.children].forEach(x=>x.classList.remove("on"));c.classList.add("on")};opts.appendChild(c)});
+    $("turn").textContent="👉 "+names()[0]+"'s turn";
+    acts.append(
+      btn("Truth",()=>{setCard("Truth • "+state.level,draw(D.tod.truth[state.level],"t"+state.level))}),
+      btn("Dare",()=>{setCard("Dare • "+state.level,draw(D.tod.dare[state.level],"d"+state.level))}),
+      btn("Next player →",nextTurn,true));
+  }else if(g==="wyr"){acts.append(btn("New question",()=>setCard("Would you rather",draw(D.wyr,"w"))))}
+  else if(g==="talk"){acts.append(btn("New starter",()=>setCard("Talk to me",draw(D.talk,"k"))))}
+  else{acts.append(btn("Spin the date 🎲",()=>setCard("Tonight you two will",draw(D.date,"s"))))}
+}
+document.querySelectorAll(".tile").forEach(t=>t.onclick=()=>open(t.dataset.g));
+$("back").onclick=()=>show("home");
+</script>
+</body>
+</html>
