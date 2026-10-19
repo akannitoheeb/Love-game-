@@ -133,7 +133,7 @@ function join(){
   const code=$("code").value.toUpperCase().replace(/[^A-Z0-9]/g,"");
   if(!code){ostatus("Type the room code first.");return}
   if(peer)peer.destroy();
-  ostatus("Joining room "+code+"...");setTimeout(()=>{if(!online)ostatus("Still trying... If nothing happens, ask your partner to tap Create a room again and send the new code.")},12000);
+  ostatus("Joining room "+code+"...");setTimeout(()=>{if(!online)ostatus("Still trying... If nothing happens, ask your partner to tap Create a room again and send the new code.")},30000);
   peer=new Peer();
   peer.on("open",()=>setup(peer.connect("betweenus-"+code)));
   peer.on("error",e=>ostatus(e.type==="peer-unavailable"?"Room not found. Ask your partner to keep the room screen open, then check the code.":"Could not connect: "+e.type));
