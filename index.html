@@ -32,6 +32,7 @@ h1{font-size:2rem;text-align:center}
 .names input{flex:1;min-width:0;padding:12px;border-radius:14px;border:1px solid #ffffff2a;background:#ffffff10;color:var(--ink);font:inherit}
 .turn{text-align:center;color:var(--gold);font-weight:700;margin-top:6px}
 .note{text-align:center;color:var(--mute);font-size:.8rem;margin-top:22px}
+#ostatus,#code{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.08em}
 .hide{display:none}
 </style>
 </head>
@@ -120,7 +121,7 @@ function onData(m){
   else if(m.t==="level"){state.level=m.l;[...$("opts").children].forEach(x=>x.classList.toggle("on",x.dataset.l===m.l))}
 }
 function create(){
-  const code=Math.random().toString(36).slice(2,7).toUpperCase();
+  const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789";let code="";for(let i=0;i<5;i++)code+=A[Math.floor(Math.random()*A.length)];
   if(peer)peer.destroy();
   peer=new Peer("betweenus-"+code);
   peer.on("open",()=>ostatus("Room code: "+code+"  – send it to your partner"));
@@ -128,7 +129,7 @@ function create(){
   peer.on("error",e=>{if(e.type==="unavailable-id")create();else ostatus("Could not connect: "+e.type)});
 }
 function join(){
-  const code=$("code").value.trim().toUpperCase();
+  const code=$("code").value.toUpperCase().replace(/[^A-Z0-9]/g,"");
   if(!code){ostatus("Type the room code first.");return}
   if(peer)peer.destroy();
   ostatus("Connecting...");
