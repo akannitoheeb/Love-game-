@@ -32,6 +32,7 @@ h1{font-size:2rem;text-align:center}
 .names input{flex:1;min-width:0;padding:12px;border-radius:14px;border:1px solid #ffffff2a;background:#ffffff10;color:var(--ink);font:inherit}
 .turn{text-align:center;color:var(--gold);font-weight:700;margin-top:6px}
 .note{text-align:center;color:var(--mute);font-size:.8rem;margin-top:22px}
+#ostatus{white-space:pre-line}
 #ostatus,#code{font-family:ui-monospace,Menlo,Consolas,monospace;letter-spacing:.08em}
 .hide{display:none}
 </style>
@@ -109,7 +110,7 @@ function banner(){$("banner").textContent=online?"🟢 Online with "+(partner||"
 function ostatus(t){$("ostatus").textContent=t}
 function setup(c){
   conn=c;
-  c.on("open",()=>{online=true;send({t:"name",n:myName()});ostatus("Connected! Tap Back and pick a game.");banner()});
+  c.on("open",()=>{online=true;send({t:"name",n:myName()});ostatus("✅ Connected! Taking you to the games...");banner();setTimeout(()=>{if(online)show("home")},1500)});
   c.on("data",onData);
   c.on("close",()=>{online=false;conn=null;partner="";banner();ostatus("Partner disconnected.")});
 }
@@ -124,7 +125,7 @@ function create(){
   const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789";let code="";for(let i=0;i<5;i++)code+=A[Math.floor(Math.random()*A.length)];
   if(peer)peer.destroy();
   peer=new Peer("betweenus-"+code);
-  peer.on("open",()=>ostatus("Room code: "+code+"  – send it to your partner"));
+  peer.on("open",()=>ostatus("Room code: "+code+"\nWaiting for "+($("p2").value.trim()||"your partner")+" to join... keep this screen open."));
   peer.on("connection",setup);
   peer.on("error",e=>{if(e.type==="unavailable-id")create();else ostatus("Could not connect: "+e.type)});
 }
@@ -132,10 +133,10 @@ function join(){
   const code=$("code").value.toUpperCase().replace(/[^A-Z0-9]/g,"");
   if(!code){ostatus("Type the room code first.");return}
   if(peer)peer.destroy();
-  ostatus("Connecting...");
+  ostatus("Joining room "+code+"...");setTimeout(()=>{if(!online)ostatus("Still trying... If nothing happens, ask your partner to tap Create a room again and send the new code.")},12000);
   peer=new Peer();
   peer.on("open",()=>setup(peer.connect("betweenus-"+code)));
-  peer.on("error",e=>ostatus(e.type==="peer-unavailable"?"Room not found. Check the code.":"Could not connect: "+e.type));
+  peer.on("error",e=>ostatus(e.type==="peer-unavailable"?"Room not found. Ask your partner to keep the room screen open, then check the code.":"Could not connect: "+e.type));
 }
 $("create").onclick=create;$("join").onclick=join;
 $("lback").onclick=()=>show("home");
