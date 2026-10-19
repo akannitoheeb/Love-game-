@@ -64,6 +64,7 @@ h1{font-size:2rem;text-align:center}
     <h1 style="font-size:1.5rem">🌍 Play Online Together</h1>
     <p class="sub">One of you creates a room and shares the code. The other joins with it. After that, you both see the same questions at the same time.</p>
     <div class="row"><button class="btn" id="create">Create a room</button></div>
+    <div class="row"><a id="wa" class="btn alt hide" target="_blank" rel="noopener" style="text-decoration:none">Send invite on WhatsApp</a></div>
     <div class="names"><input id="code" placeholder="Room code" maxlength="6" style="text-transform:uppercase"><button class="btn" id="join">Join</button></div>
     <div class="turn" id="ostatus"></div>
   </div>
@@ -121,25 +122,30 @@ function onData(m){
   else if(m.t==="turn"){$("turn").textContent="👉 "+m.n+"'s turn"}
   else if(m.t==="level"){state.level=m.l;[...$("opts").children].forEach(x=>x.classList.toggle("on",x.dataset.l===m.l))}
 }
+let myCode="";
+function watch(pr){pr.on("disconnected",()=>{try{if(!pr.destroyed)pr.reconnect()}catch(e){}})}
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&peer&&peer.disconnected&&!peer.destroyed){try{peer.reconnect()}catch(e){}}});
 function create(){
   const A="ABCDEFGHJKMNPQRSTUVWXYZ23456789";let code="";for(let i=0;i<5;i++)code+=A[Math.floor(Math.random()*A.length)];
   if(peer)peer.destroy();
-  peer=new Peer("betweenus-"+code);
-  peer.on("open",()=>ostatus("Room code: "+code+"\nWaiting for "+($("p2").value.trim()||"your partner")+" to join... keep this screen open."));
+  myCode=code;peer=new Peer("betweenus-"+code);watch(peer);
+  peer.on("open",()=>{const w=$("wa");w.href="https://wa.me/?text="+encodeURIComponent("Play Between Us with me 💞 Tap to join: "+location.origin+location.pathname+"?room="+code+"\nRoom code: "+code);w.classList.remove("hide");ostatus("Room code: "+code+"\nWaiting for "+($("p2").value.trim()||"your partner")+" to join... keep this screen open.")});
   peer.on("connection",setup);
   peer.on("error",e=>{if(e.type==="unavailable-id")create();else ostatus("Could not connect: "+e.type)});
 }
 function join(){
   const code=$("code").value.toUpperCase().replace(/[^A-Z0-9]/g,"");
   if(!code){ostatus("Type the room code first.");return}
+  if(code===myCode&&peer&&!peer.destroyed){ostatus("That is your own room code. Send it to your partner and wait on this screen.");return}
   if(peer)peer.destroy();
-  ostatus("Joining room "+code+"...");setTimeout(()=>{if(!online)ostatus("Still trying... If nothing happens, ask your partner to tap Create a room again and send the new code.")},30000);
-  peer=new Peer();
+  ostatus("Joining room "+code+"...");setTimeout(()=>{if(!online)ostatus("Still trying... If nothing happens, ask your partner to tap Create a room again and send the new code.")},12000);
+  peer=new Peer();watch(peer);
   peer.on("open",()=>setup(peer.connect("betweenus-"+code)));
   peer.on("error",e=>ostatus(e.type==="peer-unavailable"?"Room not found. Ask your partner to keep the room screen open, then check the code.":"Could not connect: "+e.type));
 }
 $("create").onclick=create;$("join").onclick=join;
 $("lback").onclick=()=>show("home");
+{const r=new URLSearchParams(location.search).get("room");if(r){$("code").value=r.toUpperCase();show("lobby");join()}}
 function updateWM(){
   const t=[$("p1").value.trim(),$("p2").value.trim()].filter(Boolean).join(" ♥ ");
   const w=$("wm");
