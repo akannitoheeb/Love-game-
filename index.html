@@ -30,6 +30,18 @@ h1{font-size:2rem;text-align:center}
 .names .chip{display:flex;align-items:center;justify-content:center;min-width:44px;font-size:1.1rem}
 .b div{white-space:pre-wrap}
 .med{display:block;max-width:100%;border-radius:12px;margin-top:4px}
+#lb{display:grid;grid-template-columns:repeat(15,1fr);margin:10px 0;border-radius:12px;overflow:hidden}
+.lc{display:flex;align-items:center;justify-content:center;aspect-ratio:1;border:1px solid #ffffff10}
+.pc{background:#ffffff22}.s0{background:#ff4d6d99}.s1{background:#ffc46b99}.h0{background:#ff4d6d66}.h1{background:#ffc46b66}.y0{background:#ff4d6d26}.y1{background:#ffc46b26}
+.tk{display:block;width:80%;aspect-ratio:1;border-radius:50%;border:2px solid #fff;min-width:0;flex:0 1 auto}
+.tk.t0{background:#ff4d6d}.tk.t1{background:#ffc46b}.tk.mv{outline:3px solid #fff;cursor:pointer}
+#sb{display:grid;grid-template-columns:repeat(10,1fr);margin:10px 0;border-radius:12px;overflow:hidden}
+.sc{aspect-ratio:1;border:1px solid #ffffff12;font-size:.5rem;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#ffffff0d}
+.sc u{text-decoration:none;color:var(--gold)}.sc .tk{position:absolute;width:38%;bottom:2px}.sc .t0{left:2px}.sc .t1{right:2px}
+#cb{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:#ffffff0d;border-radius:12px;padding:6px;margin:10px 0}
+.cc{display:flex;flex-direction:column;gap:4px;padding:3px;cursor:pointer}.cc .tk{width:100%;border-width:1px}.tk.em{background:#ffffff14;border-color:transparent}
+#tb{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px auto;max-width:300px}
+.tc{aspect-ratio:1;font-size:2.4rem;font-family:inherit;background:var(--card);color:var(--ink);border:1px solid #ffffff22;border-radius:14px;cursor:pointer}
 .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:8px 0}
 .btn{background:var(--pink);padding:13px 22px;font-weight:700}
 .btn.alt{background:#ffffff1a}
@@ -67,16 +79,10 @@ h1{font-size:2rem;text-align:center}
       <input id="p2" placeholder="Her name" maxlength="14">
     </div>
     <div class="grid">
-      <button class="tile" data-g="jar"><span class="em">⭐</span><div><b>Memory Jar</b><span>Answers you want to keep forever</span></div></button>
-      <button class="tile" data-g="online"><span class="em">🌍</span><div><b>Play Online Together</b><span>Far apart? Same game, two screens</span></div></button>
-      <button class="tile" data-g="tod"><span class="em">🔥</span><div><b>Truth or Dare</b><span>Sweet, flirty or spicy</span></div></button>
-      <button class="tile" data-g="ymm"><span class="em">💚</span><div><b>Yes / No / Maybe Match</b><span>Answer privately, see only matches</span></div></button>
-      <button class="tile" data-g="rid"><span class="em">🤭</span><div><b>Naughty Riddles</b><span>Sounds naughty, answer is innocent</span></div></button>
-      <button class="tile" data-g="wai"><span class="em">❓</span><div><b>What Am I?</b><span>Give hints, partner guesses</span></div></button>
-      <button class="tile" data-g="know"><span class="em">🧠</span><div><b>How Well Do You Know Me?</b><span>One answers, the other guesses</span></div></button>
-      <button class="tile" data-g="wyr"><span class="em">🤔</span><div><b>Would You Rather</b><span>Playful choices, big laughs</span></div></button>
-      <button class="tile" data-g="talk"><span class="em">💬</span><div><b>Conversation Starters</b><span>Never run out of things to say</span></div></button>
-      <button class="tile" data-g="date"><span class="em">🎲</span><div><b>Date Night Spinner</b><span>Let fate plan your evening</span></div></button>
+      <button class="tile" data-g="jar"><span class="em">⭐</span><div><b>Memory Jar</b><span>Answers you want to keep</span></div></button>
+      <button class="tile" data-g="online"><span class="em">🌍</span><div><b>Play Online Together</b><span>Create or join a room</span></div></button>
+      <button class="tile" data-g="love"><span class="em">💞</span><div><b>Love Games</b><span>For two. Sweet to spicy</span></div></button>
+      <button class="tile" data-g="party"><span class="em">🎉</span><div><b>Party Games</b><span>Clean, funny and competitive</span></div></button>
     </div>
     <p class="note">18+ • Consent first: either of you can say "skip" anytime, no questions asked.</p>
   </div>
@@ -91,6 +97,13 @@ h1{font-size:2rem;text-align:center}
     <div class="turn" id="ostatus"></div>
   </div>
 
+  <div id="cat" class="hide">
+    <button class="back" id="cback">← Back</button>
+    <h1 id="ctitle" style="font-size:1.5rem;text-align:center"></h1>
+    <p class="sub" id="csub"></p>
+    <div class="grid" id="cgrid"></div>
+  </div>
+
   <div id="jar" class="hide">
     <button class="back" id="jback">← Back</button>
     <h1 style="font-size:1.5rem">⭐ Memory Jar</h1>
@@ -103,6 +116,7 @@ h1{font-size:2rem;text-align:center}
     <div id="opts" class="row"></div>
     <div class="turn" id="turn"></div>
     <div class="card"><button id="qreply" class="hide" title="Reply to this question"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg></button><div class="tag" id="tag"></div><div class="q" id="q"></div></div>
+    <div id="lwrap" class="hide"></div>
     <div class="row" id="acts"></div>
     <div id="chat" class="hide">
       <div id="msgs"></div>
@@ -156,7 +170,7 @@ function setup(c){
 }
 function onData(m){
   if(m.t==="name"){partner=m.n;if(!$("p2").value.trim()){$("p2").value=m.n;updateWM()}banner()}
-  else if(m.t==="open"){open(m.g,true)}
+  else if(m.t==="open"){if(m.mode){mode=m.mode;fillCat(mode);fromCat=true}open(m.g,true)}
   else if(m.t==="card"){setCard(m.tag,m.text,true)}
   else if(m.t==="turn"){$("turn").textContent="👉 "+m.n+"'s turn"}
   else if(m.t==="chat"){ind("");addMsg(m.id,m.n||"Partner",m.text,false,m.r)}
@@ -164,6 +178,11 @@ function onData(m){
   else if(m.t==="typing"){ind((partner||"Partner")+" is typing...")}
   else if(m.t==="rec"){ind(m.on?"🎙 "+(partner||"Partner")+" is recording a voice note...":"")}
   else if(m.t==="ymm"){ymmStart(m.ids)}
+  else if(m.t==="snk"){if(S&&!S.over&&S.turn!==S.role)sapply(m.v)}
+  else if(m.t==="rps"){if(RP){RP.theirs=m.c;rpsCheck()}}
+  else if(m.t==="c4"){if(C&&!C.over&&C.turn!==C.role)c4Place(m.c)}
+  else if(m.t==="ludo"){ludoRecv(m)}
+  else if(m.t==="ttt"){if(T&&!T.over&&T.turn!==T.role)tttPlace(m.i)}
   else if(m.t==="ymmdone"){if(ymm){ymm.theirs=m.a;if(ymm.i>=ymm.ids.length)ymmReveal()}}
   else if(m.t==="star"){saveStar(m.id)}
   else if(m.t==="react"){react(m.id,m.e)}
@@ -203,7 +222,7 @@ function updateWM(){
 }
 ["p1","p2"].forEach(id=>$(id).addEventListener("input",updateWM));
 
-function show(v){$("jar").classList.toggle("hide",v!=="jar");$("lobby").classList.toggle("hide",v!=="lobby");$("home").classList.toggle("hide",v!=="home");$("game").classList.toggle("hide",v!=="game")}
+function show(v){$("cat").classList.toggle("hide",v!=="cat");$("jar").classList.toggle("hide",v!=="jar");$("lobby").classList.toggle("hide",v!=="lobby");$("home").classList.toggle("hide",v!=="home");$("game").classList.toggle("hide",v!=="game")}
 function draw(src,key){
   state.pool[key]=state.pool[key]||[];
   if(!state.pool[key].length){state.pool[key]=[...src].sort(()=>Math.random()-.5)}
@@ -300,32 +319,191 @@ function ymmReveal(){
   setCard("🔒 Your matches ("+out.length+")",out.length?out.join("\n\n"):"No matches this round, and that is perfectly okay. Try another round!",true);
   a.append(btn("Play again",()=>open("ymm")));
 }
+const PATH=[[6,1],[6,2],[6,3],[6,4],[6,5],[5,6],[4,6],[3,6],[2,6],[1,6],[0,6],[0,7],[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[6,9],[6,10],[6,11],[6,12],[6,13],[6,14],[7,14],[8,14],[8,13],[8,12],[8,11],[8,10],[8,9],[9,8],[10,8],[11,8],[12,8],[13,8],[14,8],[14,7],[14,6],[13,6],[12,6],[11,6],[10,6],[9,6],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0],[7,0],[6,0]];
+const YARD=[[[2,2],[2,3],[3,2],[3,3]],[[11,11],[11,12],[12,11],[12,12]]],SAFE=[0,8,13,21,26,34,39,47];
+let L=null,T=null;
+function lcell(pl,p){if(p<=50)return PATH[(pl*26+p)%52];if(p<=55)return pl?[7,14-(p-50)]:[7,p-50];return pl?[7,8]:[7,6]}
+function lcls(r,c){
+  const k=PATH.findIndex(x=>x[0]===r&&x[1]===c);
+  if(k===0)return"s0";if(k===26)return"s1";if(k>=0)return"pc";
+  if(r===7&&((c>=1&&c<=6)))return"h0";if(r===7&&c>=8&&c<=13)return"h1";
+  if(r<=5&&c<=5)return"y0";if(r>=9&&c>=9)return"y1";return"x";
+}
+function lmine(){return L.cpu?L.turn===0:L.turn===L.role}
+function lnm(pl){return L.cpu?(pl?"Computer":"You"):(pl===L.role?"You":(partner||"Partner"))}
+function ludoStart(role,cpu){L={p:[[-1,-1,-1,-1],[-1,-1,-1,-1]],turn:0,roll:0,can:null,role,cpu,over:false,tm:null};$("lwrap").innerHTML="";ludoUI()}
+function ludoDraw(){
+  const w=$("lwrap");w.classList.remove("hide");
+  if(!w.firstChild){let h='<div id="lb">';for(let r=0;r<15;r++)for(let c=0;c<15;c++)h+='<div class="lc '+lcls(r,c)+'" id="c'+r+'_'+c+'"></div>';w.innerHTML=h+'</div>'}
+  w.querySelectorAll(".lc").forEach(e=>e.innerHTML="");
+  L.p.forEach((arr,pl)=>arr.forEach((p,i)=>{
+    const rc=p<0?YARD[pl][i]:lcell(pl,p),t=document.createElement("i"),can=L.can&&pl===L.turn&&L.can.indexOf(i)>-1&&lmine();
+    t.className="tk t"+pl+(can?" mv":"");if(can)t.onclick=()=>lmove(i);
+    $("c"+rc[0]+"_"+rc[1]).appendChild(t);
+  }));
+}
+function ludoUI(){
+  ludoDraw();const a=$("acts");a.innerHTML="";clearTimeout(L.tm);
+  if(L.over){setCard("🏆 Ludo",lnm(L.turn)+(L.turn===(L.cpu?0:L.role)?" won! 🎉":" won this one.")+fin(L.turn===(L.cpu?0:L.role)),true);a.append(btn("Play again",()=>open("ludo")));return}
+  if(L.can===null){
+    setCard("Ludo 🎲",lmine()?"Your turn: roll the dice!":lnm(L.turn)+" is rolling...",true);
+    if(lmine())a.append(btn("Roll 🎲",lroll));else if(L.cpu)L.tm=setTimeout(cpuLudo,900);
+  }else{
+    setCard("Ludo 🎲",(lmine()?"You rolled a "+L.roll+". Tap a glowing token.":lnm(L.turn)+" rolled a "+L.roll+"."),true);
+    if(L.cpu&&L.turn===1)L.tm=setTimeout(cpuLudo,900);
+  }
+}
+function lroll(){if(L.over||L.can!==null||!lmine())return;const v=1+Math.floor(Math.random()*6);send({t:"ludo",a:"roll",v});applyRoll(v)}
+function applyRoll(v){
+  L.roll=v;const c=[0,1,2,3].filter(i=>{const p=L.p[L.turn][i];return p<0?v===6:p+v<=56});L.can=c;
+  if(!c.length){setCard("Ludo 🎲",lnm(L.turn)+" rolled a "+v+" with no move.",true);$("acts").innerHTML="";ludoDraw();clearTimeout(L.tm);L.tm=setTimeout(()=>{L.can=null;L.turn=1-L.turn;ludoUI()},1200);return}
+  ludoUI();
+}
+function lmove(i){if(!lmine()||!L.can||L.can.indexOf(i)<0)return;send({t:"ludo",a:"move",i});applyMove(i)}
+function applyMove(i){
+  const pl=L.turn,v=L.roll,o=1-pl;let p=L.p[pl][i];p=p<0?0:p+v;L.p[pl][i]=p;
+  if(p<=50&&SAFE.indexOf((pl*26+p)%52)<0){const ab=(pl*26+p)%52;L.p[o]=L.p[o].map(q=>q>=0&&q<=50&&(o*26+q)%52===ab?-1:q)}
+  L.can=null;
+  if(L.p[pl].every(x=>x===56)){L.over=true;ludoUI();return}
+  if(v!==6)L.turn=o;ludoUI();
+}
+function ludoRecv(m){
+  if(!L||L.over||L.turn===L.role)return;
+  if(m.a==="roll"&&L.can===null)applyRoll(m.v);else if(m.a==="move"&&L.can)applyMove(m.i);
+}
+function cpuLudo(){
+  if(!L||L.over||L.turn!==1)return;
+  if(L.can===null)applyRoll(1+Math.floor(Math.random()*6));
+  else if(L.can.length){const sc=i=>{const p=L.p[1][i];return p<0?30:p};applyMove(L.can.slice().sort((x,y)=>sc(y)-sc(x))[0])}
+}
+const WL=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+function tttWin(b){for(const l of WL)if(b[l[0]]&&b[l[0]]===b[l[1]]&&b[l[0]]===b[l[2]])return b[l[0]];return b.every(x=>x)?"D":""}
+function tttStart(role,cpu){T={b:Array(9).fill(""),turn:0,role,cpu,over:false};tttUI()}
+function tttMine(){return T.cpu?T.turn===0:T.turn===T.role}
+function tttUI(){
+  const w=$("lwrap");w.classList.remove("hide");
+  w.innerHTML='<div id="tb">'+T.b.map((x,i)=>'<button class="tc" data-i="'+i+'">'+x+'</button>').join("")+'</div>';
+  w.querySelectorAll(".tc").forEach(b=>b.onclick=()=>tttTap(+b.dataset.i));
+  const r=tttWin(T.b),a=$("acts");a.innerHTML="";
+  const me=(T.cpu||T.role===0)?"X":"O";
+  if(r){T.over=true;setCard("Tic-Tac-Toe",r==="D"?"It is a draw 🤝":((r===me?"You win! 🎉":"They win this round.")+fin(r===me)),true);a.append(btn("Play again",()=>open("ttt")));return}
+  setCard("Tic-Tac-Toe","You are "+me+". "+(tttMine()?"Your turn!":"Waiting for the other player..."),true);
+}
+function tttTap(i){if(T.over||T.b[i]||!tttMine())return;send({t:"ttt",i});tttPlace(i)}
+function tttPlace(i){
+  if(T.b[i])return;T.b[i]=T.turn?"O":"X";T.turn=1-T.turn;tttUI();
+  if(T.cpu&&T.turn===1&&!T.over)setTimeout(()=>{
+    const e=T.b.map((x,k)=>x?-1:k).filter(k=>k>=0),f=m=>e.find(k=>{const b=T.b.slice();b[k]=m;return tttWin(b)===m});
+    const k=f("O")!==undefined?f("O"):f("X")!==undefined?f("X"):T.b[4]===""?4:e[Math.floor(Math.random()*e.length)];
+    tttPlace(k);
+  },600);
+}
+let mode="love",fromCat=false,S=null,RP=null,C=null;
+const P={truth:{funny:["What is the most embarrassing thing you have done in public?","What is the weirdest food you have ever eaten?","What is your most useless talent?","What is the silliest fear you have?","Who here would survive longest in a zombie film?","What is the worst gift you ever got?","What song do you secretly love but never admit?","What is the funniest nickname you have ever had?"],wild:["What is the biggest lie you told as a kid?","Who here is the funniest, and why?","What is the most childish thing you still do?","What rule did you break in school?","What is the most awkward meeting you have ever had?","What is something you pretend to like but don't?","What is your most irrational pet peeve?","If you could swap lives with anyone here for a day, who and why?"]},dare:{funny:["Do your best impression of a famous person.","Speak in a funny accent until your next turn.","Sing the chorus of any song in a whisper.","Do ten jumping jacks while saying the alphabet.","Make up a rap about the person next to you.","Walk like a robot across the room.","Tell a joke and keep a straight face.","Act like a chicken for 15 seconds."],wild:["Use a word the group picks in every sentence for two rounds.","Do your best dramatic movie death scene.","Show the last photo in your gallery and explain it.","Try to lick your elbow.","Dance with no music for 20 seconds.","Say your next three sentences in slow motion.","Talk without moving your lips for one minute.","Hold a plank until the next turn starts."]},words:["Pizza","Football","Airport","Elephant","Birthday cake","Selfie","Rainbow","Superhero","Jollof rice","Lagos traffic","Karaoke","Okada","Wedding party","Beach","Movie night"]};
+function LV(){return mode==="party"?["funny","wild"]:["sweet","flirty","spicy"]}
+function TD(){return mode==="party"?P:D.tod}
+function fin(won){return won?"\n\nThe other player owes a dare!":"\n\nYour dare:\n"+(mode==="party"?draw(P.dare.funny,"fd"):draw(D.tod.dare.flirty,"fd"))}
+const CATS={love:[["tod","🔥","Truth or Dare","Sweet, flirty or spicy"],["ymm","💚","Yes / No / Maybe","Private match"],["wyr","🤔","Would You Rather","Playful choices"],["talk","💬","Conversation Starters","Never run dry"],["know","🧠","Know Me?","One answers, one guesses"],["date","🎲","Date Spinner","Plan your evening"],["rid","🤭","Naughty Riddles","Innocent answers"],["wai","❓","What Am I?","Hints and guesses"],["ludo","🎲","Ludo","Race home"],["snk","🐍","Snakes & Ladders","Climb to 100"],["c4","🔴","Connect 4","Line up four"],["ttt","⭕","Tic-Tac-Toe","Quick duel"],["rps","✊","Rock Paper Scissors","First to 3"]],party:[["tod","🎉","Truth or Dare","Funny or wild"],["rid","🤭","Riddles","Naughty-sounding, innocent"],["wai","❓","What Am I?","Hints and guesses"],["ludo","🎲","Ludo","Race home"],["snk","🐍","Snakes & Ladders","Climb to 100"],["c4","🔴","Connect 4","Line up four"],["ttt","⭕","Tic-Tac-Toe","Quick duel"],["rps","✊","Rock Paper Scissors","First to 3"]]};
+function go(g){if(g==="online")show("lobby");else if(g==="jar"){renderJar();show("jar")}else if(g==="love"||g==="party"){mode=g;fillCat(g);fromCat=true;show("cat")}else open(g)}
+function fillCat(m){
+  $("ctitle").textContent=m==="love"?"💞 Love Games":"🎉 Party Games";
+  $("csub").textContent=m==="love"?"Made for two. Skip anything anytime.":"Clean and competitive. Losers get funny dares.";
+  const g=$("cgrid");g.innerHTML="";
+  CATS[m].forEach(x=>{const b=document.createElement("button");b.className="tile";b.innerHTML='<span class="em">'+x[1]+'</span><div><b>'+x[2]+'</b><span>'+x[3]+'</span></div>';b.onclick=()=>go(x[0]);g.appendChild(b)});
+}
+const LAD={3:22,8:26,20:39,28:56,51:67,71:91},SNK={17:7,54:34,62:19,64:60,87:24,93:73,95:75,98:79};
+function smine(){return S.cpu?S.turn===0:S.turn===S.role}
+function snm(pl){return S.cpu?(pl?"Computer":"You"):(pl===S.role?"You":(partner||"Partner"))}
+function snkStart(role,cpu){S={p:[0,0],turn:0,role,cpu,over:false,tm:null,msg:"First to reach 100 wins."};snkUI()}
+function snkUI(){
+  const w=$("lwrap");w.classList.remove("hide");let h='<div id="sb">';
+  for(let r=9;r>=0;r--)for(let c=0;c<10;c++){const n=r*10+(r%2?9-c:c)+1,tg=LAD[n]?"<u>🪜"+LAD[n]+"</u>":SNK[n]?"<u>🐍"+SNK[n]+"</u>":"";h+='<div class="sc"><b>'+n+'</b>'+tg+(S.p[0]===n?'<i class="tk t0"></i>':'')+(S.p[1]===n?'<i class="tk t1"></i>':'')+'</div>'}
+  w.innerHTML=h+'</div>';
+  const a=$("acts");a.innerHTML="";clearTimeout(S.tm);
+  if(S.over){const won=S.turn===(S.cpu?0:S.role);setCard("🏆 Snakes & Ladders",S.msg+"\n"+snm(S.turn)+(won?" won! 🎉":" won this one.")+fin(won),true);a.append(btn("Play again",()=>open("snk")));return}
+  setCard("Snakes & Ladders 🐍",S.msg+"\n"+(smine()?"Your turn: roll!":snm(S.turn)+" is rolling..."),true);
+  if(smine())a.append(btn("Roll 🎲",sroll));else if(S.cpu)S.tm=setTimeout(()=>sapply(1+Math.floor(Math.random()*6)),900);
+}
+function sroll(){if(S.over||!smine())return;const v=1+Math.floor(Math.random()*6);send({t:"snk",v});sapply(v)}
+function sapply(v){
+  const pl=S.turn;let n=S.p[pl]+v,m=snm(pl)+" rolled "+v+".";
+  if(n>100){n=S.p[pl];m+=" Needs the exact number to finish."}else if(LAD[n]){m+=" 🪜 Ladder up to "+LAD[n]+"!";n=LAD[n]}else if(SNK[n]){m+=" 🐍 Snake down to "+SNK[n]+"!";n=SNK[n]}
+  S.p[pl]=n;S.msg=m;if(n===100)S.over=true;else if(v!==6)S.turn=1-pl;snkUI();
+}
+const RPSN={r:"✊ Rock",p:"✋ Paper",s:"✌️ Scissors"};
+function rpsStart(cpu){RP={mine:null,theirs:null,sc:[0,0],cpu,over:false};rpsUI("First to 3 wins. Pick one!")}
+function rpsUI(msg){
+  const a=$("acts");a.innerHTML="";$("lwrap").classList.add("hide");
+  setCard("✊✋✌️ You "+RP.sc[0]+" - "+RP.sc[1]+" "+(RP.cpu?"Computer":(partner||"Partner")),msg,true);
+  if(RP.over){a.append(btn("Play again",()=>open("rps")));return}
+  if(RP.mine===null)["r","p","s"].forEach(c=>a.append(btn(RPSN[c],()=>rpsPick(c))));
+}
+function rpsPick(c){RP.mine=c;if(RP.cpu)RP.theirs=["r","p","s"][Math.floor(Math.random()*3)];else send({t:"rps",c});rpsCheck()}
+function rpsCheck(){
+  if(RP.mine===null)return;
+  if(RP.theirs===null){rpsUI("Locked in. Waiting for "+(partner||"your partner")+"...");return}
+  const m=RP.mine,t=RP.theirs,w=m===t?0:(m==="r"&&t==="s"||m==="p"&&t==="r"||m==="s"&&t==="p")?1:2;
+  if(w===1)RP.sc[0]++;else if(w===2)RP.sc[1]++;
+  const line="You: "+RPSN[m]+"   Them: "+RPSN[t]+"\n"+(w===0?"Draw!":w===1?"You win the round!":"They win the round.");
+  RP.mine=RP.theirs=null;
+  if(RP.sc[0]>=3||RP.sc[1]>=3){RP.over=true;rpsUI(line+"\n\n"+(RP.sc[0]>=3?"🏆 You win the game!":"They win the game.")+fin(RP.sc[0]>=3));return}
+  rpsUI(line+"\n\nNext round: pick again!");
+}
+function c4Start(role,cpu){C={b:Array(42).fill(-1),turn:0,role,cpu,over:false,win:-1};c4UI()}
+function c4Mine(){return C.cpu?C.turn===0:C.turn===C.role}
+function c4Win(b,pl){for(let r=0;r<6;r++)for(let c=0;c<7;c++){if(b[r*7+c]!==pl)continue;for(const[dr,dc]of[[0,1],[1,0],[1,1],[1,-1]]){let k=1;while(k<4){const rr=r+dr*k,cc=c+dc*k;if(rr<0||rr>5||cc<0||cc>6||b[rr*7+cc]!==pl)break;k++}if(k===4)return true}}return false}
+function c4Drop(c){for(let r=5;r>=0;r--)if(C.b[r*7+c]<0)return r;return -1}
+function c4UI(){
+  const w=$("lwrap");w.classList.remove("hide");let h='<div id="cb">';
+  for(let c=0;c<7;c++){h+='<div class="cc" data-c="'+c+'">';for(let r=0;r<6;r++){const v=C.b[r*7+c];h+='<i class="tk '+(v<0?"em":"t"+v)+'"></i>'}h+='</div>'}
+  w.innerHTML=h+'</div>';w.querySelectorAll(".cc").forEach(e=>e.onclick=()=>c4Tap(+e.dataset.c));
+  const a=$("acts");a.innerHTML="";const me=C.cpu?0:C.role;
+  if(C.over){const won=C.win===me;setCard("Connect 4",C.win<0?"It is a draw 🤝":(won?"You win! 🎉":"They win this round.")+fin(won),true);a.append(btn("Play again",()=>open("c4")));return}
+  setCard("Connect 4","You are "+(me===0?"red":"yellow")+". "+(c4Mine()?"Your turn: tap a column.":"Waiting for the other player..."),true);
+}
+function c4Tap(c){if(C.over||!c4Mine()||c4Drop(c)<0)return;send({t:"c4",c});c4Place(c)}
+function c4Place(c){
+  const r=c4Drop(c);if(r<0)return;const pl=C.turn;C.b[r*7+c]=pl;
+  if(c4Win(C.b,pl)){C.over=true;C.win=pl}else if(C.b.every(x=>x>=0)){C.over=true;C.win=-1}else C.turn=1-pl;
+  c4UI();if(C.cpu&&!C.over&&C.turn===1)setTimeout(c4Cpu,600);
+}
+function c4Cpu(){
+  const cols=[0,1,2,3,4,5,6].filter(c=>c4Drop(c)>=0),t=(c,pl)=>{const b=C.b.slice();b[c4Drop(c)*7+c]=pl;return c4Win(b,pl)};
+  let k=cols.find(c=>t(c,1));if(k===undefined)k=cols.find(c=>t(c,0));
+  if(k===undefined){const pf=[3,2,4,1,5,0,6].filter(c=>cols.indexOf(c)>-1);k=pf[Math.floor(Math.random()*Math.min(3,pf.length))]}
+  c4Place(k);
+}
 
 function open(g,remote){
-  if(!remote)send({t:"open",g});
+  if(!remote)send({t:"open",g,mode});
   state.g=g;state.pool={};state.turn=remote?1:0;show("game");
   const opts=$("opts"),acts=$("acts");opts.innerHTML="";acts.innerHTML="";
-  $("turn").textContent="";setCard("Ready?","Tap a button to begin.",true);
-  if(g==="tod"){
-    ["sweet","flirty","spicy"].forEach(l=>{const c=document.createElement("button");c.className="chip"+(l===state.level?" on":"");c.dataset.l=l;c.textContent={sweet:"💗 Sweet",flirty:"😘 Flirty",spicy:"🔥 Spicy"}[l];c.onclick=()=>{state.level=l;send({t:"level",l});[...opts.children].forEach(x=>x.classList.remove("on"));c.classList.add("on")};opts.appendChild(c)});
+  $("plus").classList.toggle("hide",mode==="party");$("turn").textContent="";$("lwrap").classList.add("hide");$("lwrap").innerHTML="";setCard("Ready?","Tap a button to begin.",true);
+  if(g==="tod"){if(LV().indexOf(state.level)<0)state.level=LV()[0];
+    LV().forEach(l=>{const c=document.createElement("button");c.className="chip"+(l===state.level?" on":"");c.dataset.l=l;c.textContent={sweet:"💗 Sweet",flirty:"😘 Flirty",spicy:"🔥 Spicy",funny:"😂 Funny",wild:"🤪 Wild"}[l];c.onclick=()=>{state.level=l;send({t:"level",l});[...opts.children].forEach(x=>x.classList.remove("on"));c.classList.add("on")};opts.appendChild(c)});
     $("turn").textContent="👉 "+names()[remote?1:0]+"'s turn";
     acts.append(
-      btn("Truth",()=>{setCard("Truth • "+state.level,draw(D.tod.truth[state.level],"t"+state.level))}),
-      btn("Dare",()=>{setCard("Dare • "+state.level,draw(D.tod.dare[state.level],"d"+state.level))}),
+      btn("Truth",()=>{setCard("Truth • "+state.level,draw(TD().truth[state.level],"t"+state.level))}),
+      btn("Dare",()=>{setCard("Dare • "+state.level,draw(TD().dare[state.level],"d"+state.level))}),
       btn("Next player →",nextTurn,true));
   }else if(g==="wyr"){acts.append(btn("New question",()=>setCard("Would you rather",draw(D.wyr,"w"))))}
+  else if(g==="snk"){if(online)snkStart(remote?1:0,false);else snkStart(0,true)}
+  else if(g==="rps"){rpsStart(!online)}
+  else if(g==="c4"){if(online)c4Start(remote?1:0,false);else c4Start(0,true)}
+  else if(g==="ludo"){if(online)ludoStart(remote?1:0,false);else ludoStart(0,true)}
+  else if(g==="ttt"){if(online)tttStart(remote?1:0,false);else tttStart(0,true)}
   else if(g==="ymm"){
     if(!online)setCard("Needs two phones","Tap Play Online Together first and connect, then open this game. Each of you answers privately on your own phone.",true);
     else if(!remote){const ids=YMM.map((_,i)=>i).sort(()=>Math.random()-.5).slice(0,12);send({t:"ymm",ids});ymmStart(ids)}
   }
   else if(g==="rid"){acts.append(btn("New riddle",()=>{state.cur=draw(D.rid,"r");setCard("Riddle 🤭",state.cur[0])}),btn("Reveal answer",()=>{if(state.cur)setCard("Answer",state.cur[1])},true))}
-  else if(g==="wai"){acts.append(btn("New secret word",()=>{const w=draw(D.words,"w2");state.word=w;setCard("🔒 Your secret word",w,true);send({t:"card",tag:"Guess it! 🤔",text:names()[0]+" is giving hints. Ask yes/no questions or guess the word."})}),btn("Reveal",()=>{if(state.word)setCard("The word was",state.word)},true))}
+  else if(g==="wai"){acts.append(btn("New secret word",()=>{const w=draw(mode==="party"?P.words:D.words,"w2"+mode);state.word=w;setCard("🔒 Your secret word",w,true);send({t:"card",tag:"Guess it! 🤔",text:names()[0]+" is giving hints. Ask yes/no questions or guess the word."})}),btn("Reveal",()=>{if(state.word)setCard("The word was",state.word)},true))}
   else if(g==="know"){acts.append(btn("New question",()=>setCard("Answer, then let them guess",draw(D.know,"n"))))}
   else if(g==="talk"){acts.append(btn("New starter",()=>setCard("Talk to me",draw(D.talk,"k"))))}
   else{acts.append(btn("Spin the date 🎲",()=>setCard("Tonight you two will",draw(D.date,"s"))))}
 }
-document.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{const g=t.dataset.g;if(g==="online")show("lobby");else if(g==="jar"){renderJar();show("jar")}else open(g)});
-$("back").onclick=()=>show("home");
+document.querySelectorAll(".tile").forEach(t=>t.onclick=()=>go(t.dataset.g));
+$("back").onclick=()=>show(fromCat?"cat":"home");$("cback").onclick=()=>{fromCat=false;show("home")};
 </script>
 </body>
 </html>
